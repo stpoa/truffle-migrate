@@ -194,6 +194,8 @@ var Migrate = {
     async.eachSeries(migrations, function(migration, finished) {
       migration.run(clone, function(err) {
         if (err) return finished(err);
+        var blockNumber = web3.eth.blockNumber;
+        fs.writeFileSync('blocknumber.json', JSON.stringify(blockNumber));
         finished();
       });
     }, callback);
